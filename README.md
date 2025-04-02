@@ -10,8 +10,8 @@ Requires [docker](https://www.docker.com/).
 
 ## Building AOT binaries
 
-1. Spawn a terminal under `Container`
-2. Move your assemblies under `Container/root`
+1. Move your assemblies under `Container`
+2. Spawn a terminal under `Container`
 3. Run the container: `docker run -v $PWD:/container --rm -it mono-3ds /bin/bash`
 4. Invoke mono:
 
