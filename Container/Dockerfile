@@ -36,7 +36,8 @@ RUN printf \
     # GCC_CONFIG += --with-arch=armv6 --with-mode=arm --with-fpu=vfp
     "TARGET = arm-linux-musleabihf\nOUTPUT = /opt/armv6\nCOMMON_CONFIG += CFLAGS=\"-O2\" CXXFLAGS=\"-O2\" LDFLAGS=\"-s\"\nGCC_CONFIG += --with-arch=armv6 --with-mode=arm --with-fpu=vfp" \
     > config.mak && \
-    make install -j$(nproc)
+    make -j$(nproc) && \
+    make install
 
 # Clone mono
 WORKDIR /build
@@ -45,7 +46,8 @@ WORKDIR /build/mono
 
 # Build C# code
 RUN ./autogen.sh --prefix=/opt/mono --disable-boehm --enable-nls=no --enable-minimal=profiler,debug,logging && \
-    make install -j$(nproc) && \
+    make -j$(nproc) && \
+    make install && \
     make clean
 
 # Build ARM tooling
@@ -59,8 +61,9 @@ RUN \
     RANLIB=/opt/armv6/bin/arm-linux-musleabihf-ranlib \
     CFLAGS="-march=armv6k -marm -mtune=mpcore -mtp=soft" \
     LDFLAGS=$CFLAGS \
-    ./autogen.sh --host=arm-linux-musleabihf --disable-shared --enable-static-gcc-libs --disable-boehm --disable-mcs-build --prefix=/opt/mono --enable-nls=no --enable-minimal=profiler,debug,logging && \
-    make install -j$(nproc) && \
+    ./autogen.sh --prefix=/opt/mono --disable-boehm --enable-nls=no --enable-minimal=profiler,debug,logging --host=arm-linux-musleabihf --disable-shared --enable-static-gcc-libs --disable-mcs-build && \
+    make -j$(nproc) && \
+    make install && \
     make clean
 
 # We're done
