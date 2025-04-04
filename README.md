@@ -1,5 +1,7 @@
 # mono-3ds
 
+Many thanks to [Alvin](https://github.com/alvinhochun) for helping setting up the environment.
+
 ## Setting up the AOT environment
 
 Requires [docker](https://www.docker.com/).
